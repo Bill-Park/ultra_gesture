@@ -32,8 +32,6 @@ void setup() {
 void loop() {
   long distance1 = ultra(trig1, echo1) ;
   long distance2 = ultra(trig2, echo2) ;
-  //  Serial.print("distance 1 :  ") ;
-  //  Serial.println(distance1) ;
 
   if (distance1 < 1000) {
     flag = 1 ;
@@ -77,7 +75,6 @@ void loop() {
       }
     }
   }
-  //  delay(300) ;
   
   if (digitalRead(play) == LOW) {  //스위치가 눌리면
     while (digitalRead(play) == LOW) ;  //뗄때까지 대기
