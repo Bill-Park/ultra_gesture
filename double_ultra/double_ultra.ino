@@ -44,18 +44,18 @@ void loop() {
   if (flag == 1) {
     long time = millis() ;
     while (1) {
-      if (time < millis() - 300) {
-        if (ultra(trig1, echo1) < 1000) {
-          Consumer.write(MEDIA_VOLUME_MUTE) ;
+      if (time < millis() - 300) {  //0.3초가 지났을 때
+        if (ultra(trig1, echo1) < 1000) {  //여전히 감지된다면
+          Consumer.write(MEDIA_VOLUME_MUTE) ;  //mute실행
           delay(100) ;
         }
         flag = 0 ;
         break ;
       }
-      if (ultra(trig2, echo2) < 1000) {
-        Consumer.write(MEDIA_VOLUME_UP) ;
+      if (ultra(trig2, echo2) < 1000) {  //반대편이 감지된다면
+        Consumer.write(MEDIA_VOLUME_UP) ;  //volume up실행
         delay(80) ;
-        time = millis() ;
+        time = millis() ;  //시간 초기화  
       }
     }
   }
@@ -79,9 +79,9 @@ void loop() {
   }
   //  delay(300) ;
   
-  if (digitalRead(play) == LOW) {
-    while (digitalRead(play) == LOW) ;
-    Consumer.write(MEDIA_PLAY_PAUSE) ;
+  if (digitalRead(play) == LOW) {  //스위치가 눌리면
+    while (digitalRead(play) == LOW) ;  //뗄때까지 대기
+    Consumer.write(MEDIA_PLAY_PAUSE) ;  //재생/정지 실행
   }
   
 }
@@ -89,7 +89,7 @@ void loop() {
 long ultra(int trig, int echo)
 {
   long duration[3] ;
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {  //3번 값을 읽고 저장
     digitalWrite(trig, LOW) ;
     delayMicroseconds(2) ;
     digitalWrite(trig, HIGH) ;
@@ -98,5 +98,5 @@ long ultra(int trig, int echo)
     duration[i] = pulseIn(echo, HIGH) ;
   }
 
-  return (duration[0] + duration[1] + duration[2]) / 3 ;
+  return (duration[0] + duration[1] + duration[2]) / 3 ;  //값의 평균을 출력
 }
