@@ -18,6 +18,8 @@ int flag = 0 ;
 int updown = 0 ;
 int tem = 2000 ;
 
+int base_dis = 700 ;
+
 void setup() {
   pinMode(echo1, INPUT) ;
   pinMode(trig1, OUTPUT) ;
@@ -33,24 +35,24 @@ void loop() {
   long distance1 = ultra(trig1, echo1) ;
   long distance2 = ultra(trig2, echo2) ;
 
-  if (distance1 < 1000) {
+  if (distance1 < base_dis) {
     flag = 1 ;
   }
-  else if (distance2 < 1000) {
+  else if (distance2 < base_dis) {
     flag = 2 ;
   }
   if (flag == 1) {
     long time = millis() ;
     while (1) {
       if (time < millis() - 300) {  //0.3초가 지났을 때
-        if (ultra(trig1, echo1) < 1000) {  //여전히 감지된다면
+        if (ultra(trig1, echo1) < base_dis) {  //여전히 감지된다면
           Consumer.write(MEDIA_VOLUME_MUTE) ;  //mute실행
           delay(100) ;
         }
         flag = 0 ;
         break ;
       }
-      if (ultra(trig2, echo2) < 1000) {  //반대편이 감지된다면
+      if (ultra(trig2, echo2) < base_dis) {  //반대편이 감지된다면
         Consumer.write(MEDIA_VOLUME_UP) ;  //volume up실행
         delay(80) ;
         time = millis() ;  //시간 초기화  
@@ -61,14 +63,14 @@ void loop() {
     long time = millis() ;
     while (1) {
       if (time < millis() - 300) {
-        if (ultra(trig2, echo2) < 1000) {
+        if (ultra(trig2, echo2) < base_dis) {
           Consumer.write(MEDIA_VOLUME_MUTE) ;
           delay(100) ;
         }
         flag = 0 ;
         break ;
       }
-      if (ultra(trig1, echo1) < 1000) {
+      if (ultra(trig1, echo1) < base_dis) {
         Consumer.write(MEDIA_VOLUME_DOWN) ;
         delay(80) ;
         time = millis() ;
